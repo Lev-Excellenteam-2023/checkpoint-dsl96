@@ -8,8 +8,7 @@ int main() {
 	struct School school = createEmptySchool();
 
 	processFile(filename, &school);
-	printSchool(&school);
-
+ 
 	deleteAllStudents(&school);
 
 	return 0;
