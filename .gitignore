@@ -2,3 +2,43 @@ students_with_class.txt
 
 .vs/
 *.sln
+
+students_with_class.txt
+
+# Ignore Visual Studio files and folders
+*.sln
+*.suo
+*.user
+*.csproj
+*.vbproj
+*.vcxproj
+*.vsixmanifest
+*.pubxml
+*.publishsettings
+*.vssscc
+bin/
+obj/
+_UpgradeReport_Files/
+UpgradeLog.XML
+TestResults/
+**/.vs/
+
+**/x64/
+# Ignore specific Visual Studio files
+checkPoint/checkPoint/checkPoint.vcxproj
+checkPoint/checkPoint/checkPoint.vcxproj.filters
+checkPoint/checkPoint/checkPoint.vcxproj.user
+
+checkPoint/.vs/checkPoint/FileContentIndex/9d3ffacb-54ad-4c38-8b65-b566b4a702e3.vsidx
+checkPoint/.vs/checkPoint/FileContentIndex/read.lock
+checkPoint/.vs/checkPoint/v17/Browse.VC.db
+
+
+# Ignore Visual Studio code coverage files
+*.coverage
+*.coveragexml
+
+# Ignore NuGet package restore files
+packages/
+
+ 
