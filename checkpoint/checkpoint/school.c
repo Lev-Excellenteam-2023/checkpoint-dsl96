@@ -1,5 +1,7 @@
 #include "school.h"
 #include <stdlib.h>
+#include<stdio.h>
+#include <string.h>
  
 struct Student* createStudent(const char* first_name, const char* last_name, int level, int _class, int phone_number) {
 	struct Student* newStudent = (struct Student*)malloc(sizeof(struct Student));
