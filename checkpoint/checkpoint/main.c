@@ -2,7 +2,7 @@
 #include"fileReader.h"
 #include"school.h"
 
-
+ 
 int main() {
 	const char* filename = "students_with_class.txt";
 	 
@@ -10,11 +10,14 @@ int main() {
 
 	processFile(filename, &school);
  
-	pirntTopNInSchoole(&school, 10, 0);
+	//pirntTopNInSchoole(&school, 10, 0);
+	//printStudentByAvg(&school, 60);
+	printSchool(&school);
 
 	deleteAllStudents(&school);
 
 	return 0;
 }
+
 
 

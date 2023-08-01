@@ -16,6 +16,7 @@ struct Student {
     int _class;
     int phone_number;
     int scores[NUM_SCORES];
+    float avg;
 };
 
 struct NodeStudent {
@@ -51,4 +52,6 @@ void editStudentGradeInSchool(struct School* school, int phone_number, int exam_
 void printStudentByPhone(struct School* school, int phoneNumber);
 struct Student* searchStudentInScool(struct School* school, int phoneNumber);
 void pirntTopNInSchoole(struct School* school, int N, int course);
+
+void printStudentByAvg(struct School* school, int minAvg);
 #endif  
