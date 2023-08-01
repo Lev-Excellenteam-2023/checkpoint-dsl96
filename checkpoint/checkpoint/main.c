@@ -9,6 +9,7 @@ int main() {
 
 	processFile(filename, &school);
  
+	printSchool(&school);
 	deleteAllStudents(&school);
 
 	return 0;

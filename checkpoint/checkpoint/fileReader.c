@@ -27,6 +27,7 @@ void processFile(const char* filename, struct School* school) {
  
         
         insertStudentToSchool(school, nodeStudent);    
+
     }
 
     fclose(file);
