@@ -161,8 +161,44 @@ void menu() {
 
 }
 
+void test()
+{
+    struct School school = createEmptySchool();
 
+    struct NodeStudent* student1 = createNodeStudent("d1", "gh", 1, 5, 123);
+    struct NodeStudent* student2 = createNodeStudent("d1", "gh", 1, 5, 8002);
+    struct NodeStudent* student3 = createNodeStudent("d1", "gh", 1, 5, 4);
+    struct NodeStudent* student4 = createNodeStudent("d1", "gh", 1, 5, 8);
+    struct NodeStudent* student5 = createNodeStudent("d1", "gh", 1, 5, 9);
+    struct NodeStudent* student6 = createNodeStudent("d1", "gh", 1, 5, 85);
+
+
+    insertStudentToSchool(&school, student1);
+    insertStudentToSchool(&school, student2);
+    insertStudentToSchool(&school, student3);
+    insertStudentToSchool(&school, student4);
+    insertStudentToSchool(&school, student5);
+    insertStudentToSchool(&school, student6);
+
+    student1->student->scores[2] = 101;
+    student2->student->scores[2] = 7;
+    student3->student->scores[2] = 78;
+    student4->student->scores[2] = 46;
+    student5->student->scores[2] = 125;
+    student6->student->scores[2] = 100;
+
+    
+
+    pirntTopNInSchoole(&school, 3, 2);
+
+   
+
+}
+/*
 int main() {
-    menu();
+    //menu();
+
+    test();
     return 0;
 }
+*/

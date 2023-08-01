@@ -82,7 +82,7 @@ void insertStudentToSchool(struct School* school, struct NodeStudent* newStudent
 		return;
 	}
 
-	struct NodeStudent** currentStudentPtr = &school->levels[level - 1].classes[_class - 1].students;
+	struct NodeStudent** currentStudentPtr = &school->levels[level].classes[_class].students;
 
 	if (currentStudentPtr == NULL)
 		*currentStudentPtr = newStudentNode;
@@ -202,7 +202,7 @@ void editStudentGradeInSchool(struct School* school, int phone_number, int exam_
 		return;
 	}
 
-	if (MAX_GRADE < new_grade|| exam_number < 0) {
+	if (MAX_GRADE < new_grade || exam_number < 0) {
 		printf("Invalid exam grade \n");
 		return;
 	}
@@ -228,7 +228,7 @@ void editStudentGradeInSchool(struct School* school, int phone_number, int exam_
 }
 
 
-struct Student* searchStudentInScool(struct School* school , int phoneNumber) {
+struct Student* searchStudentInScool(struct School* school, int phoneNumber) {
 	if (school == NULL) {
 		printf("Invalid input: school is NULL\n");
 		return NULL;
@@ -239,8 +239,8 @@ struct Student* searchStudentInScool(struct School* school , int phoneNumber) {
 			struct NodeStudent* currentStudentNode = school->levels[level].classes[_class].students;
 
 			while (currentStudentNode != NULL) {
-				if ( currentStudentNode->student->phone_number == phoneNumber) {
-					 
+				if (currentStudentNode->student->phone_number == phoneNumber) {
+
 					return currentStudentNode->student;
 				}
 
@@ -256,6 +256,109 @@ void printStudentByPhone(struct School* school, int phoneNumber)
 {
 	struct Student* student = searchStudentInScool(school, phoneNumber);
 	printStudent(student);
+}
+
+int findMinStudentIndex(struct  Student** arr, int size, int course) {
+	int minIndex = 0;
+	for (int i = 1; i < size; i++) {
+		if (arr[i]->scores[course] < arr[minIndex]->scores[course]) {
+			minIndex = i;
+		}
+	}
+	return minIndex;
+}
+
+
+void replaceMinStudent(struct Student** arr, int size, struct Student* newStudent, int course) {
+	//the func dont delete the deleted student !!!!
+	int minIndex = findMinStudentIndex(arr, size, course);
+
+	if (arr[minIndex]->scores[course] < newStudent->scores[course])
+		arr[minIndex] = newStudent;
+}
+
+
+
+
+void getTopNinLevel(struct Level* level, int N, int course)
+{
+
+	if (N < 1 || N>300) {
+		printf("Invalid N \n");
+		return;
+	}
+	struct  Student** top_students_array = (struct NodeStudent**)malloc(N * sizeof(struct  Student*));
+
+	struct NodeStudent* head = level->classes[0].students;
+
+
+	int countClass = 0;
+	for (int i = 0; i < N; i++) {
+		top_students_array[i] = NULL;
+	}
+
+	for (size_t i = 0; i < N; i++)
+	{
+		if (head == NULL)
+		{
+			if (countClass >= NUM_CLASSES)
+				break;
+
+			countClass = countClass + 1;
+			i = i - 1;
+			head = level->classes[countClass].students;
+
+		}
+		else
+		{
+			top_students_array[i] = head->student;
+
+			head = head->next;
+		}
+	}
+
+
+
+	while (1)
+	{
+
+		if (head == NULL)
+		{
+			if (countClass >= NUM_CLASSES)
+				break;
+
+			countClass = countClass + 1;
+			head = head = level->classes[countClass].students;
+		}
+		else
+		{
+			replaceMinStudent(top_students_array, N, head->student, course);
+			head = head->next;
+		}
+	}
+
+	for (size_t i = 0; i < N; i++)
+	{
+		if (top_students_array[i] == NULL)
+			break;
+
+		printStudent(top_students_array[i]);
+	}
+
+	free(top_students_array);
+}
+
+void pirntTopNInSchoole(struct School* school, int N, int course)
+{
+	if (NUM_SCORES <= course || course < 0) {
+		printf("Invalid course number \n");
+		return;
+	}
+	for (size_t i = 0; i < NUM_LEVELS; i++)
+	{
+		printf("TOP %d in level %i course %d \n", N, i, course);
+		getTopNinLevel(&school->levels[i], N, course);
+	}
 }
 
 

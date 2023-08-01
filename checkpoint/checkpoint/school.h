@@ -6,7 +6,7 @@
 #define MAX_NAME_LENGTH 30
 #define NUM_LEVELS  12
 #define NUM_CLASSES 10
-#define NUM_SCORES 12
+#define NUM_SCORES 10
 #define MAX_GRADE 100
 
 struct Student {
@@ -50,4 +50,5 @@ void deleteStudentByPhoneNumber(struct School* school, int phone_number);
 void editStudentGradeInSchool(struct School* school, int phone_number, int exam_number, int new_grade);
 void printStudentByPhone(struct School* school, int phoneNumber);
 struct Student* searchStudentInScool(struct School* school, int phoneNumber);
+void pirntTopNInSchoole(struct School* school, int N, int course);
 #endif  
