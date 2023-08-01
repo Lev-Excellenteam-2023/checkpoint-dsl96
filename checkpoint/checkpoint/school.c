@@ -276,6 +276,7 @@ void printStudentByPhone(struct School* school, int phoneNumber)
 
 	if (student == NULL)
 		return;
+
 	printStudent(student);
 }
 

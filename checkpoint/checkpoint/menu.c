@@ -109,7 +109,7 @@ void searchStudent(struct School* school)
     printf("Enter student phone number :");
     scanf("%d", &phoneNumber);
 
-    printStudentByPhone(&school, phoneNumber);
+    printStudentByPhone(school, phoneNumber);
 }
 
 void menu() {
