@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include<stdio.h>
 #include <string.h>
- 
+
 struct Student* createStudent(const char* first_name, const char* last_name, int level, int _class, int phone_number) {
 	struct Student* newStudent = (struct Student*)malloc(sizeof(struct Student));
 
@@ -12,6 +12,7 @@ struct Student* createStudent(const char* first_name, const char* last_name, int
 		return NULL;
 	}
 
+	//TODO add len validation
 	strncpy(newStudent->first_name, first_name, MAX_NAME_LENGTH - 1);
 	newStudent->first_name[MAX_NAME_LENGTH - 1] = '\0';
 
@@ -59,6 +60,10 @@ struct School createEmptySchool() {
 		}
 	}
 
+	newSchool.numOfStudents = 0;
+
+	strcpy(newSchool.name, "");
+
 	return newSchool;
 };
 
@@ -88,10 +93,11 @@ void insertStudentToSchool(struct School* school, struct NodeStudent* newStudent
 		*currentStudentPtr = newStudentNode;
 	}
 
-
+	school->numOfStudents = school->numOfStudents + 1;
+	return;
 }
 
-void printStudent(const struct Student* student) {
+void printStudent(struct Student* student) {
 	printf("Name: %s %s\n", student->first_name, student->last_name);
 	printf("Level: %d\n", student->level);
 	printf("Class: %d\n", student->_class);
@@ -140,10 +146,121 @@ void deleteAllStudents(struct School* school) {
 				freeNodeStudent(currentStudentNode);
 				currentStudentNode = nextStudentNode;
 			}
-			school->levels[level].classes[_class].students = NULL;  
+			school->levels[level].classes[_class].students = NULL;
 		}
 	}
 }
+
+void deleteStudentByPhoneNumber(struct School* school, int phone_number) {
+	if (school == NULL) {
+		printf("Invalid input: school is NULL\n");
+		return;
+	}
+
+	for (int level = 0; level < NUM_LEVELS; level++) {
+		for (int _class = 0; _class < NUM_CLASSES; _class++) {
+			struct NodeStudent* currentStudentNode = school->levels[level].classes[_class].students;
+			struct NodeStudent* prevStudentNode = NULL;
+
+			while (currentStudentNode != NULL) {
+				if (currentStudentNode->student->phone_number == phone_number) {
+					school->numOfStudents = school->numOfStudents - 1;
+
+					if (prevStudentNode == NULL) {
+						// If the student is the first node in the list
+						school->levels[level].classes[_class].students = currentStudentNode->next;
+					}
+					else {
+						prevStudentNode->next = currentStudentNode->next;
+					};
+
+					printf("Student with phone number %d deleted from the school.\n", phone_number);
+					printStudent(currentStudentNode->student);
+					freeNodeStudent(currentStudentNode);
+
+					return;
+				}
+
+				prevStudentNode = currentStudentNode;
+				currentStudentNode = currentStudentNode->next;
+			}
+		}
+	}
+
+	printf("Student with phone number %d not found in the school.\n", phone_number);
+}
+
+
+void editStudentGradeInSchool(struct School* school, int phone_number, int exam_number, int new_grade) {
+	if (school == NULL) {
+		printf("Invalid input: school is NULL\n");
+		return;
+	}
+
+	if (NUM_SCORES <= exam_number || exam_number < 0) {
+		printf("Invalid exam_number \n");
+		return;
+	}
+
+	if (MAX_GRADE < new_grade|| exam_number < 0) {
+		printf("Invalid exam grade \n");
+		return;
+	}
+
+	for (int level = 0; level < NUM_LEVELS; level++) {
+		for (int _class = 0; _class < NUM_CLASSES; _class++) {
+			struct NodeStudent* currentStudentNode = school->levels[level].classes[_class].students;
+
+			while (currentStudentNode != NULL) {
+				if (currentStudentNode->student->phone_number == phone_number) {
+
+					currentStudentNode->student->scores[exam_number - 1] = new_grade;
+					printStudent(currentStudentNode->student);
+					return;
+				}
+
+				currentStudentNode = currentStudentNode->next;
+			}
+		}
+	}
+
+	printf("Student with phone number %d not found in the school.\n", phone_number);
+}
+
+
+struct Student* searchStudentInScool(struct School* school , int phoneNumber) {
+	if (school == NULL) {
+		printf("Invalid input: school is NULL\n");
+		return NULL;
+	}
+
+	for (int level = 0; level < NUM_LEVELS; level++) {
+		for (int _class = 0; _class < NUM_CLASSES; _class++) {
+			struct NodeStudent* currentStudentNode = school->levels[level].classes[_class].students;
+
+			while (currentStudentNode != NULL) {
+				if ( currentStudentNode->student->phone_number == phoneNumber) {
+					 
+					return currentStudentNode->student;
+				}
+
+				currentStudentNode = currentStudentNode->next;
+			}
+		}
+	}
+
+	return NULL;
+}
+
+void printStudentByPhone(struct School* school, int phoneNumber)
+{
+	struct Student* student = searchStudentInScool(school, phoneNumber);
+	printStudent(student);
+}
+
+
+
+
 
 
 
