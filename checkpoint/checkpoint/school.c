@@ -88,13 +88,13 @@ void insertStudentToSchool(struct School* school, struct NodeStudent* newStudent
 	int level = newStudentNode->student->level;
 	int _class = newStudentNode->student->_class;
 
-	if (level <= 0 || level > NUM_LEVELS || _class <= 0 || _class > NUM_CLASSES) {
+	if (level < 0 || level >= NUM_LEVELS || _class < 0 || _class >= NUM_CLASSES) {
 		printf("Invalid input: level or class is out of range\n");
 		return;
 	}
 
 	newStudentNode->student->avg = calculateAverage(newStudentNode->student);
-	struct NodeStudent** currentStudentPtr = &school->levels[level-1].classes[_class-1].students;
+	struct NodeStudent** currentStudentPtr = &school->levels[level].classes[_class].students;
 
 	if (*currentStudentPtr == NULL) {
 		newStudentNode->next = NULL;
@@ -273,6 +273,9 @@ struct Student* searchStudentInScool(struct School* school, int phoneNumber) {
 void printStudentByPhone(struct School* school, int phoneNumber)
 {
 	struct Student* student = searchStudentInScool(school, phoneNumber);
+
+	if (student == NULL)
+		return;
 	printStudent(student);
 }
 
@@ -298,7 +301,7 @@ void replaceMinStudent(struct Student** arr, int size, struct Student* newStuden
 
 
 
-void getTopNinLevel(struct Level* level, int N, int course)
+void getTopNInLevel(struct Level* level, int N, int course)
 {
 
 	if (N < 1 || N>300) {
@@ -317,12 +320,14 @@ void getTopNinLevel(struct Level* level, int N, int course)
 
 	for (size_t i = 0; i < N; i++)
 	{
+	
+
 		if (head == NULL)
 		{
+			countClass = countClass + 1;
+
 			if (countClass >= NUM_CLASSES)
 				break;
-
-			countClass = countClass + 1;
 			i = i - 1;
 			head = level->classes[countClass].students;
 
@@ -339,13 +344,11 @@ void getTopNinLevel(struct Level* level, int N, int course)
 
 	while (1)
 	{
-
 		if (head == NULL)
 		{
+			countClass = countClass + 1;
 			if (countClass >= NUM_CLASSES)
 				break;
-
-			countClass = countClass + 1;
 			head = head = level->classes[countClass].students;
 		}
 		else
@@ -366,7 +369,7 @@ void getTopNinLevel(struct Level* level, int N, int course)
 	free(top_students_array);
 }
 
-void pirntTopNInSchoole(struct School* school, int N, int course)
+void printTopNInSchoole(struct School* school, int N, int course)
 {
 	if (NUM_SCORES <= course || course < 0) {
 		printf("Invalid course number \n");
@@ -375,7 +378,7 @@ void pirntTopNInSchoole(struct School* school, int N, int course)
 	for (size_t i = 0; i < NUM_LEVELS; i++)
 	{
 		printf("TOP %d in level %i course %d \n", N, i, course);
-		getTopNinLevel(&school->levels[i], N, course);
+		getTopNInLevel(&school->levels[i], N, course);
 	}
 }
 

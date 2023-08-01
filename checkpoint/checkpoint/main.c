@@ -2,7 +2,7 @@
 #include"fileReader.h"
 #include"school.h"
 
- 
+ /*
 int main() {
 	const char* filename = "students_with_class.txt";
 	 
@@ -18,6 +18,7 @@ int main() {
 
 	return 0;
 }
+*/
 
 
 

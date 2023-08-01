@@ -28,12 +28,14 @@ void insertNewStudent(struct School* school)
     int phoneNumber;
 
      
-        printf("Enter level (0 to %d) to add a student : ", NUM_LEVELS - 1);
+        printf("Enter level (1 to %d) to add a student : ", NUM_LEVELS );
         scanf("%d", &level);
+        level = level - 1;
  
-        printf("Enter class (0 to %d) to add a student : ", NUM_CLASSES - 1);
+        printf("Enter class (1 to %d) to add a student : ", NUM_CLASSES );
         scanf("%d", &_class);
 
+        _class = _class - 1;
         if (_class < 0 || _class >= NUM_CLASSES) {
             printf("Invalid class");
             return;
@@ -83,20 +85,42 @@ void editStudentGrade(struct School* school) {
 
     editStudentGradeInSchool(school, phoneNumber, examNum, newGrade);
 }
+printTopNStudentsPerCourse(struct School* school)
+{
+    int course;
+    printf("Enter courseclass (1 to %d)   : ", NUM_SCORES);
+    scanf("%d", &course);
+      course = course - 1;
 
+
+      if (course < 0 || course >= NUM_SCORES)
+      {
+          printf(" incalide course " );
+          return;
+      }
+   
+
+    
+      printTopNInSchoole(school, 10, course);
+}
 void searchStudent(struct School* school)
 {
     int phoneNumber;
     printf("Enter student phone number :");
     scanf("%d", &phoneNumber);
 
-    printStudentByPhone(school, phoneNumber);
+    printStudentByPhone(&school, phoneNumber);
 }
 
 void menu() {
     char input;
 
+    
+
     struct School school = createEmptySchool();
+
+    const char* filename = "students_with_class.txt";
+    processFile(filename, &school);
     strcpy(school.name, "lev");
 
     do {
@@ -134,7 +158,7 @@ void menu() {
             printSchool(&school);
             break;
         case Top10:
-            //printTopNStudentsPerCourse();
+            printTopNStudentsPerCourse(&school);
             break;
         case UnderperformedStudents:
             //printUnderperformedStudents();
@@ -189,18 +213,15 @@ void test()
 
     
 
-    pirntTopNInSchoole(&school, 3, 2);
-
-   
-
+    printTopNInSchoole(&school, 3, 2);
 }
 
-/*
+
 int main() {
     menu();
 
    // test();
     return 0;
 }
-*/
+
 

@@ -51,7 +51,7 @@ void deleteStudentByPhoneNumber(struct School* school, int phone_number);
 void editStudentGradeInSchool(struct School* school, int phone_number, int exam_number, int new_grade);
 void printStudentByPhone(struct School* school, int phoneNumber);
 struct Student* searchStudentInScool(struct School* school, int phoneNumber);
-void pirntTopNInSchoole(struct School* school, int N, int course);
+void printTopNInSchoole(struct School* school, int N, int course);
 
 void printStudentByAvg(struct School* school, int minAvg);
 #endif  

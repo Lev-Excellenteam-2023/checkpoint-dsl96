@@ -25,7 +25,8 @@ void processFile(const char* filename, struct School* school) {
             &nodeStudent->student->scores[4], &nodeStudent->student->scores[5], &nodeStudent->student->scores[6],
             &nodeStudent->student->scores[7], &nodeStudent->student->scores[8], &nodeStudent->student->scores[9]);
  
-        
+        nodeStudent->student->level = nodeStudent->student->level - 1;
+        nodeStudent->student->_class = nodeStudent->student->_class-1;
         insertStudentToSchool(school, nodeStudent);    
 
     }
