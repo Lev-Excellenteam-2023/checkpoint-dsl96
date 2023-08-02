@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "school.h"
+#include <xkeycheck.h>
 
 enum menu_inputs {
     Insert = '0',
@@ -18,7 +19,10 @@ enum menu_inputs {
     Exit = '9'
 };
 
-
+int validateCourseNum(int courseNum)
+{
+    return courseNum >= 0 && courseNum < NUM_SCORES;
+}
 void insertNewStudent(struct School* school)
 {
     int level;
@@ -95,7 +99,7 @@ printTopNStudentsPerCourse(struct School* school)
 
       if (course < 0 || course >= NUM_SCORES)
       {
-          printf(" incalide course " );
+          printf(" invalid course " );
           return;
       }
    
